@@ -20,6 +20,8 @@
   <body>
   	<div class="container">
 	    <h1>Get in Touch!</h1>
+	    <div id="error">
+	    </div>
 	    <form>
 		  <div class="form-group">
 		    <label for="email">Email address</label>
@@ -41,5 +43,51 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js" integrity="sha384-XTs3FgkjiBgo8qjEjBk0tGmf3wPrWtA6coPfQDfFEY8AnYJwjalXCiosYRBIBZX8" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+    	
+    	$("form").submit(function(e){
+
+    		e.preventDefault();
+
+    		var error = "";
+
+    		if($("#email").val() == ""){
+
+    			error += "Kindly enter the email address.<br>";
+    		}
+
+    		if($("#subject").val() == ""){
+
+    			error += "The subject is mandatory.<br>";
+    		}
+
+    		if($("#content").val() == ""){
+
+    			error += "Please enter the content of the email.";
+    		}
+
+  			
+  			if(error != ""){
+
+  				$("#error").html('<div class="alert alert-danger" role="alert"><strong>There were some errors in the form.<br></strong>' + error + '</div>');
+
+  			}else{
+
+  				$("form").unbind("submit").submit();
+  				
+  			}
+    		
+
+
+
+
+
+    	});
+
+
+    </script>
+
+
   </body>
 </html>
