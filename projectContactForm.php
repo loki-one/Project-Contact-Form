@@ -3,6 +3,7 @@
 	#Creating a contact form using php, bootstrap and javascript.
 	
 	$error = "";
+	$successMsg = "";
 
 	if($_POST){
 
@@ -32,6 +33,30 @@
 
 			$error = '<div class="alert alert-danger" role="alert"><strong>There were some errors in the form.<br></strong>' . $error . '</div>';
 
+		}else{
+
+			$emailTo = "lokesh.jadhav10@gmail.com";
+
+			$subject = $_POST['subject'];
+
+			$content = $_POST['content'];
+
+			$headers = "From: ".$_POST['email'];
+
+			if(mail($emailTo, $subject, $content, $headers)){
+
+				$successMsg = '<div class="alert alert-success" role="alert"> Your message was sent, we will get back to you ASAP!</div>'; 
+
+			}else{
+
+				$error =  '<div class="alert alert-danger" role="alert"> Your message was  not sent, please try again later</div>'; 
+
+			}
+
+
+
+
+
 		}
 
 	}
@@ -56,7 +81,7 @@
 	    <h1>Get in Touch!</h1>
 	    <div id="error">
 	    	<?php
-	    		echo $error;
+	    		echo $error.$successMsg;
 	    	?>
 	    </div>
 	    <form method="POST">
@@ -85,7 +110,7 @@
 		
 		$("form").submit(function(e){
 
-    		e.preventDefault();
+    		//e.preventDefault(); this creates problem of double click hence use return true and false method instead.
 
     		var error = "";
 
@@ -109,9 +134,13 @@
 
   				$("#error").html('<div class="alert alert-danger" role="alert"><strong>There were some errors in the form.<br></strong>' + error + '</div>');
 
+  				return false;
+
   			}else{
 
-  				$("form").unbind("submit").submit();
+  				//$("form").unbind("submit").submit(); this creates problem of double click hence use return true and false method instead.
+
+  				return true;
 
   			}
 
