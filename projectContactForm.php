@@ -1,6 +1,40 @@
 <?php
 
 	#Creating a contact form using php, bootstrap and javascript.
+	
+	$error = "";
+
+	if($_POST){
+
+
+		if(!$_POST["email"]){
+
+			$error .= "Kindly enter the email address!!<br>";
+		}
+
+		if(!$_POST["subject"]){
+
+			$error .= "The subject is required!!<br>";
+		}
+
+		if(!$_POST["content"]){
+
+			$error .= "Please enter the content for the email!!<br>";
+		}
+
+		if($_POST["email"] && filter_var($_POST["email"], FILTER_VALIDATE_EMAIL) === false){
+
+			$error .= "The email is invalid<br>";
+
+		}
+
+		if($error != ""){
+
+			$error = '<div class="alert alert-danger" role="alert"><strong>There were some errors in the form.<br></strong>' . $error . '</div>';
+
+		}
+
+	}
 
 
 ?>
@@ -21,19 +55,22 @@
   	<div class="container">
 	    <h1>Get in Touch!</h1>
 	    <div id="error">
+	    	<?php
+	    		echo $error;
+	    	?>
 	    </div>
-	    <form>
+	    <form method="POST">
 		  <div class="form-group">
 		    <label for="email">Email address</label>
-		    <input type="email" class="form-control" id="email" placeholder="Enter your email">
+		    <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
 		  </div>
 		  <div class="form-group">
 		    <label for="subject">Subject</label>
-		    <input type="text" class="form-control" id="subject">
+		    <input type="text" class="form-control" id="subject" name="subject">
 		  </div>
 		  <div class="form-group">
 		    <label for="content">What would you like to ask us?</label>
-		    <textarea class="form-control" id="content" rows="3"></textarea>
+		    <textarea class="form-control" id="content" name="content" rows="3"></textarea>
 		  </div>
 		  <button type="submit" id="submit" class="btn btn-primary">Submit</button>
 		</form>
@@ -45,8 +82,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
 
     <script type="text/javascript">
-    	
-    	$("form").submit(function(e){
+		
+		$("form").submit(function(e){
 
     		e.preventDefault();
 
@@ -75,17 +112,11 @@
   			}else{
 
   				$("form").unbind("submit").submit();
-  				
+
   			}
-    		
-
-
-
-
 
     	});
-
-
+		    	
     </script>
 
 
